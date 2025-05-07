@@ -23,7 +23,7 @@
             <div class="flex justify-end p-4">
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ route('dashboard') }}" class="px-4 py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="{{ route('home') }}" class="px-4 py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
                         <form method="POST" action="{{ route('logout') }}" class="inline-block">
                             @csrf
                             <button type="submit" class="px-4 py-2 text-gray-700 hover:text-blue-600">Logout</button>
