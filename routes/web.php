@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
+use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,8 +15,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/home', function () {
-        return view('home');
+        $tasks = Task::where('user_id',Auth::id())->latest()->take(5)->get();
+        return view('home',compact('tasks'));
     })->name('home');
-    Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+    Route::get('/tasks',[TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/create',[TaskController::class, 'create'])->name('tasks.create');
+    // Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });
 

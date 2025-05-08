@@ -11,7 +11,8 @@ class TaskController extends Controller
     //show tasks for the logged in user
     public function index(){
         // Fetch tasks assigned to the logged-in user
-        $tasks = Task::where('user_id',Auth::id())->get();
+        $tasks = Task::where('user_id',Auth::id())->latest()->get();
+        
 
         return view('tasks.index',compact('tasks'));
     }
