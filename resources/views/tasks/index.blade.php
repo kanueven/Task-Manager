@@ -27,8 +27,8 @@
                  <td class="py-2 px-4 border-b">{{ $task->user->name }}</td>
                  <td class="py-2 px-4 border-b">{{ $task->due_date }}</td>
                  <td class="py-2 px-4 border-b">
-                      <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-500 hover:underline">Edit</a>
-                      <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                      <a href="" class="text-blue-500 hover:underline">Edit</a>
+                      <form action="" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:underline">Delete</button>

@@ -20,6 +20,7 @@ Route::middleware([
     })->name('home');
     Route::get('/tasks',[TaskController::class, 'index'])->name('tasks.index');
     Route::get('/tasks/create',[TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks/store',[TaskController::class, 'store'])->name('tasks.store');
     // Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });
 

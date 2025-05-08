@@ -46,29 +46,28 @@
                         <th class="py-2 px-4 border-b">Task Name</th>
                         <th class="py-2 px-4 border-b">Status</th>
                         <th class="py-2 px-4 border-b">Description</th>
-                        <th class="py-2 px-4 border-b">User Name</th>
                         <th class="py-2 px-4 border-b">Due Date</th>
+                        <th class="py-2 px-4 border-b">User Name</th>
                         <th class="py-2 px-4 border-b">Actions</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                   @foreach ($tasks as $task )
-                   <tr>
-                    <td class="py-2 px-4 border-b">{{ $task->title }}</td>
-                    <td class="py-2 px-4 border-b">{{ $task->description }}</td>
-                    <td class="py-2 px-4 border-b">{{ $task->status }}</td>
-                    <td class="py-2 px-4 border-b">{{ $task->due_date }}</td>
-                    <td class="py-2 px-4 border-b">{{ $task->user->name }}</td>
-                    <td class="py-2 px-4 border-b">
-                        <a href="#" class="text-blue-500 hover:text-blue-700">Edit</a>
-                        <a href="#" class="text-red-500 hover:text-red-700 ml-2">Delete</a>
-                    </td>
-                </tr>
-                       
-                   @endforeach
+                    @foreach ($tasks as $task)
+                        <tr>
+                            <td class="py-2 px-4 border-b">{{ $task->title }}</td>
+                            <td class="py-2 px-4 border-b">{{ $task->description }}</td>
+                            <td class="py-2 px-4 border-b">{{ $task->status }}</td>
+                            <td class="py-2 px-4 border-b">{{ $task->due_date }}</td>
+                            <td class="py-2 px-4 border-b">{{ $task->user->name }}</td>
+                            <td class="py-2 px-4 border-b">
+                                <a href="#" class="text-blue-500 hover:text-blue-700">Edit</a>
+                                <a href="#" class="text-red-500 hover:text-red-700 ml-2">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
-                
+
             </table>
         </div>
 

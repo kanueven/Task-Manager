@@ -2,7 +2,7 @@
 @section('content')
     <div class="p-4  w-full bg-white rounded-md shadow">
         <h2 class="text-2xl">Add New Task</h2>
-        <form action="" method="POST" class=" space-y-4">
+        <form action="{{ route('tasks.store') }}" method="POST" class=" space-y-4">
             @csrf
             <div class="flex items-center mb-4 ">
                 <label for="title" class="w-40 text-sm font-medium text-gray-700">Task Title:</label>
