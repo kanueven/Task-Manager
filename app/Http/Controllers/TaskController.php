@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -13,8 +14,31 @@ class TaskController extends Controller
         // Fetch tasks assigned to the logged-in user
         $tasks = Task::where('user_id',Auth::id())->latest()->get();
         
+       
+        $today = Carbon::today();
+        $completedTasks = Task::where('user_id', Auth::id())->where('status', 'completed')->count();
+        $overdueTasks = Task::where('user_id', Auth::id())
+                    ->where('due_date', '<', $today)  ->where('status', '!=', 'completed')->count();
 
-        return view('tasks.index',compact('tasks'));
+        $pendingTasks = Task::where('user_id', Auth::id())->where('status', '!=', 'completed')->count();
+        $inProgressTasks = Task::where('user_id', Auth::id())->where('status', 'in progress')->count();
+        $totalTasks = Task::where('user_id', Auth::id())->count();
+        //completed rate
+         $completedRate = $totalTasks > 0 ? round ($completedTasks / $totalTasks) * 100 : 0;
+        $taskCounts = [
+            'completed' => $completedTasks,
+            'overdue' => $overdueTasks,
+            'pending' => $pendingTasks,
+            'in_progress' => $inProgressTasks,
+            'total' => $totalTasks,
+        ];
+
+        // Pass the task counts to the view
+        return view('tasks.index', compact('tasks', 'taskCounts', 'completedRate'));
+
+        
+
+   
     }
     public function create(){
         return view('tasks.create');

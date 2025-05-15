@@ -23,7 +23,20 @@
                 <tr>
                  <td class="py-2 px-4 border-b">{{ $task->title }}</td>
                  <td class="py-2 px-4 border-b">{{ $task->description }}</td>
-                 <td class="py-2 px-4 border-b">{{ $task->status }}</td>
+                 <td class="py-2 px-4 border-b">
+                                @php
+                                    $status = $task->calculated_status;
+                                    $statusColor = match ($status) {
+                                        'completed' => 'bg-green-200 text-green-600',
+                                        'overdue' => 'bg-red-200 text-red-600',
+                                        'in progress' => 'bg-blue-200 text-blue-600',
+                                        default => 'bg-yellow-200 text-yellow-600',
+                                    };
+                                @endphp
+                                <span class="px-2 py-1 rounded {{ $statusColor }}">
+                                    {{ ucfirst($status) }}
+                                </span>
+                            </td>
                  <td class="py-2 px-4 border-b">{{ $task->user->name }}</td>
                  <td class="py-2 px-4 border-b">{{ $task->due_date }}</td>
                  <td class="py-2 px-4 border-b">

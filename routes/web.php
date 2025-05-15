@@ -15,12 +15,23 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/home', function () {
-        $tasks = Task::where('user_id',Auth::id())->latest()->take(5)->get();
-        return view('home',compact('tasks'));
+        $tasks = Task::where('user_id', Auth::id())->take(5)->get();
+        $totalTasks = Task::where('user_id', Auth::id())->count();
+        $completedTasks = Task::where('user_id', Auth::id())->where('status', 'completed')->count();
+        $pendingTasks = Task::where('user_id', Auth::id())->where('status', '!=', 'completed')->count();
+        $inProgressTasks = Task::where('user_id', Auth::id())->where('status', 'in progress')->count();
+
+        $completedRate = $totalTasks > 0 ? ($completedTasks / $totalTasks) * 100 : 0;
+        return view('home', compact('tasks', 'completedRate','totalTasks', 'completedTasks', 'pendingTasks','inProgressTasks'));
     })->name('home');
-    Route::get('/tasks',[TaskController::class, 'index'])->name('tasks.index');
-    Route::get('/tasks/create',[TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/tasks/store',[TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks/store', [TaskController::class, 'store'])->name('tasks.store');
     // Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });
 
+Route::middleware(['admin', 'auth'])->group(function () {
+    Route::get('/admin', function () {
+        return view('dashboard.admin');
+    });
+});
